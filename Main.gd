@@ -1,5 +1,6 @@
 extends Control
 
+# Template Node Declarations
 var sgn = load("res://Nodes/SampleNode.tscn")
 var initial_position = Vector2(40,40)
 var node_index = 0
@@ -8,11 +9,8 @@ var node_index = 0
 func _ready():
 	pass # Replace with function body.
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
 
-
+# On node add button pressed
 func _on_Button_pressed():
 	var node = sgn.instance()
 	node.offset += initial_position + (node_index * Vector2(20,20))
@@ -21,14 +19,15 @@ func _on_Button_pressed():
 	node_index += 1
 
 
+# Whisker node connection
 func _on_GraphEdit_connection_request(from, from_slot, to, to_slot):
 	$GraphEdit.connect_node(from, from_slot, to, to_slot)
 
-
+# Whisker node disconnection
 func _on_GraphEdit_disconnection_request(from, from_slot, to, to_slot):
 	$GraphEdit.disconnect_node(from, from_slot, to, to_slot)
 
-
+# Convert to js, currently just adds the value of each node.
 func _on_Convert_pressed():
 	var G = $GraphEdit
 	var connection_list = G.get_connection_list()
@@ -42,6 +41,6 @@ func _on_Convert_pressed():
 			result += value_2
 	print(result)
 
-
+# On theme button pressed, which.. doesnt exist yet.
 #func _on_Theme_pressed():
 #	$Popup/FileDialog.visible = true
